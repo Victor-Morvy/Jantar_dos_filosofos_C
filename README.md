@@ -1,4 +1,4 @@
-#Jantar_dos_filosofos_C
+# Jantar_dos_filosofos_C
 Implantação do desafio clássico Jantar dos Filosofos em C com multiprocessos.
 
 ## Introdução
