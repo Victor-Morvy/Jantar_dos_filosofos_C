@@ -1,5 +1,5 @@
 # Jantar_dos_filosofos_C
-Implantação do desafio clássico Jantar dos Filosofos em C com multiprocessos.
+Implementação do desafio clássico Jantar dos Filosofos em C com multiprocessos.
 
 ## Introdução
 Este projeto foi dado como trabalho para entrega pelo professor Cesar Tegani Tofanini, na matéria de Programação distribuída, paralela e concorrente na Universidade Padre Anchieta de Jundiaí - SP. E tem como o objetivo implantar o desafio do Jantar dos filosofos utilizando semaphores na linguagem C e multiprocessos.
