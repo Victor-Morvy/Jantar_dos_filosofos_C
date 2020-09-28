@@ -20,6 +20,7 @@ int dir;
 int aleatorio();
 void comer();
 void filosofar();
+void comendo();
 
 int main(int argc, char** argv)
 {
