@@ -4,16 +4,16 @@
 #include <string.h>
 #include <windows.h>
 #define N 5
-#define TAMRAND 5000 //Tempo de atÈ 5s para aleatorio
+#define TAMRAND 5000 //Tempo de at√© 5s para aleatorio
 
 DWORD resultEsperaGarfo;
 HANDLE garfo[N];
 
-//vari·veis de controle de nÌvel de fome
+//vari√°veis de controle de n√≠vel de fome
 //tentativa de evitar/dificultar starvation e deadlock
 int nvFome = 0;
 
-//vari·veis do n∫ do garfo na mesa
+//vari√°veis do n¬∫ do garfo na mesa
 int esq;
 int dir;
 
@@ -23,7 +23,7 @@ void filosofar();
 
 int main(int argc, char** argv)
 {
-    //vari·vel numero do filosofo
+    //vari√°vel numero do filosofo
     int nrFilosofo;
 
     //variavel definindo while
@@ -37,11 +37,11 @@ int main(int argc, char** argv)
         itoa(i, val, 10);
         strcat(str, val);
 
-        // criaÁ„o dos garfos
+        // cria√ß√£o dos garfos
         garfo[i] = CreateSemaphore(NULL,
         1, //valor inicial (vagas)
-        1, //tamanho m·ximo
-        str); //nome pra diferenciaÁ„o
+        1, //tamanho m√°ximo
+        str); //nome pra diferencia√ß√£o
     }
 
     //Argumento de entrada e dando numero a filosofos
@@ -74,7 +74,7 @@ int main(int argc, char** argv)
 
     while(run)
     {
-        //aqui que a m·gica acontece
+        //aqui que a m√°gica acontece
         filosofar();
         printf("O filosofo esta faminto...\n");
         comer();
@@ -86,7 +86,7 @@ int main(int argc, char** argv)
 int aleatorio()
 {
     srand(time(NULL));
-    return rand()%TAMRAND - 1000; //aleatÛrio de 1 a 5 segundos
+    return rand()%TAMRAND - 1000; //aleat√≥rio de 1 a 5 segundos
     //return 1000;
 }
 
@@ -99,6 +99,7 @@ void comer()
     {
 
         resultEsperaGarfo = WaitForSingleObject(garfo[dir], INFINITE);
+	    comendo();
     }
     else
     {
@@ -106,15 +107,11 @@ void comer()
 
         switch(resultEsperaGarfo)
         {
-            case WAIT_OBJECT_0: //O filÛsofo comer·
-                nvFome += 1;
-                printf("O filosofo esta comendo...\n");
-                Sleep(aleatorio()); // valor aleatÛrio pro filosofo comer
-                ReleaseSemaphore(garfo[esq], 1, NULL);
-                ReleaseSemaphore(garfo[dir], 1, NULL);
+            case WAIT_OBJECT_0: //O fil√≥sofo comer√°
+                comendo();
                 break;
 
-            case WAIT_TIMEOUT: //O filÛsofo n„o est· com tanta fome, vai voltar a filosofar por um tempo
+            case WAIT_TIMEOUT: //O fil√≥sofo n√£o est√° com tanta fome, vai voltar a filosofar por um tempo
                 nvFome -= 1;
                 ReleaseSemaphore(garfo[esq], 1, NULL);
                 printf("O filosofo nao esta com tanta fome, vai soltar o garfo e vai tentar comer depois...\n");
@@ -126,5 +123,14 @@ void comer()
 void filosofar()
 {
     printf("O filosofo esta filosofando...\n");
-    Sleep(aleatorio()); //tempo que o filosofo estar· filosofando antes de sentir fome
+    Sleep(aleatorio()); //tempo que o filosofo estar√° filosofando antes de sentir fome
+}
+
+void comendo()
+{
+	nvFome += 1;
+	printf("O filosofo esta comendo...\n");
+	Sleep(aleatorio()); // valor aleat√≥rio pro filosofo comer
+	ReleaseSemaphore(garfo[esq], 1, NULL);
+	ReleaseSemaphore(garfo[dir], 1, NULL);	
 }
